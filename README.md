@@ -27,7 +27,7 @@ Checks outliers with boxplots and the IQR rule
 Explores the data (distributions, correlation heatmap, scatter plots)
 Splits and scales the data (scaler fit on training data only, to avoid leakage)
 Applies PCA to handle the correlated shape features
-Trains four regression models for each target: Linear Regression, Ridge, Lasso, and Polynomial (degree 2)
+Trains five regression models for each target: Linear Regression, Ridge, Lasso, Polynomial (degree 2), and Linear Regression on PCA components
 Evaluates the models with R², MAE, and RMSE, and confirms reliability with 5-fold cross-validation
 Finds the most important features and tests which relationships are statistically significant
 How to run
@@ -46,13 +46,18 @@ pip install numpy pandas matplotlib seaborn scikit-learn scipy ucimlrepo
 jupyter notebook
 Results
 
-The regression models predict both energy loads with high accuracy. The Polynomial (degree 2) model performed best, reaching an R² above 0.90 on the test set for both targets. The most influential design features were the building's overall height and relative compactness, while orientation had little effect.
+The Polynomial (degree 2) model performed best for both targets on the 20% held-out test set:
 
-(Exact numbers are shown in the notebook output.)
+Heating load: R² = 0.989, MAE = 0.857 kWh/m²
+Cooling load: R² = 0.956, MAE = 1.607 kWh/m²
+
+5-fold cross-validation gave mean R² of 0.990 (heating) and 0.958 (cooling), confirming the results are stable. The most influential design features were overall height, roof area, surface area, and relative compactness, while orientation had almost no effect.
+
+(Full results and figures are in the notebook output.)
 
 Files
 CS316 Energy Efficiency.ipynb — the full project notebook (data prep, EDA, modeling, evaluation)
 README.md — this file
-
 Tools
+
 Python, pandas, NumPy, scikit-learn, matplotlib, seaborn, SciPy — run in Google Colab.
